@@ -42,6 +42,7 @@
 
 
 ## 4.求和案例_react-redux基本使用
+      安装 npm install react-redux
 			(1).明确两个概念：
 						1).UI组件:不能使用任何redux的api，只负责页面的呈现、交互等。
 						2).容器组件：负责和redux通信，将结果交给UI组件。
@@ -59,7 +60,7 @@
 			(3).使用了react-redux后也不用再自己检测redux中状态的改变了，容器组件可以自动完成这个工作。
 			(4).mapDispatchToProps也可以简单的写成一个对象
 			(5).一个组件要和redux“打交道”要经过哪几步？
-							(1).定义好UI组件---不暴露
+							(1).定义好UI组件---不用暴露
 							(2).引入connect生成一个容器组件，并暴露，写法如下：
 									connect(
 										state => ({key:value}), //映射状态
@@ -85,3 +86,8 @@
 ## 8.求和案例_react-redux最终版
 			(1).所有变量名字要规范，尽量触发对象的简写形式。
 			(2).reducers文件夹中，编写index.js专门用于汇总并暴露所有的reducer
+
+## 9.打包上线
+      npm build
+      安装serve：npm i serve -g
+      切换到build文件夹，执行serve

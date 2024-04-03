@@ -78,16 +78,22 @@
 ## 八、路由的严格匹配与模糊匹配
 				1.默认使用的是模糊匹配（简单记：【输入的路径】必须包含要【匹配的路径】，且顺序要一致）
 				2.开启严格匹配：<Route exact={true} path="/about" component={About}/>
+        <!-- [已过时！！ 最新写法是在path中加*来匹配] <Route children path="about/*" Component={About} /> -->
 				3.严格匹配不要随便开启，需要再开，有些时候开启会导致无法继续匹配二级路由
 
-## 九、Redirect的使用	
+## 九、Redirect的使用	【！！！已过时】
 				1.一般写在所有路由注册的最下方，当所有路由都无法匹配时，跳转到Redirect指定的路由
 				2.具体编码：
-						<Switch>
+						<!-- <Switch>
 							<Route path="/about" component={About}/>
 							<Route path="/home" component={Home}/>
 							<Redirect to="/about"/>
-						</Switch>
+						</Switch> -->
+            <Routes>
+              <Route path="about/*" Component={About} />
+              <Route path="home" Component={Home} />
+              <Route path="*" Component={Home} />
+            </Routes>
 
 ## 十、嵌套路由
 				1.注册子路由时要写上父路由的path值
@@ -118,6 +124,10 @@
 							-this.prosp.history.goBack()
 							-this.prosp.history.goForward()
 							-this.prosp.history.go()
+
+## withRouter：在一般组件中如何使用路由组件API
+      Header组件是一般组件，不能使用this.props.history对象
+      通过 export default withRouter(Header) 就能使用了
 
 ## 十三、BrowserRouter与HashRouter的区别
 			1.底层原理不一样：
