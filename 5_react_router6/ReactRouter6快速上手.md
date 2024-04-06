@@ -154,7 +154,7 @@
 
 ### 7. `<Outlet>`
 
-1. 当`<Route>`产生嵌套时，渲染其对应的后续子路由。
+1. 当`<Route>`产生嵌套时，渲染其对应的[后续]子路由,一级组件中还是要先用useRoutes(routes)注册路由。
 
 2. 示例代码：
 
@@ -295,20 +295,18 @@
    ```jsx
    import React from 'react';
    import { Routes, Route, useParams } from 'react-router-dom';
-   import User from './pages/User.jsx'
    
-   function ProfilePage() {
-     // 获取URL中携带过来的params参数
-     let { id } = useParams();
-   }
-   
-   function App() {
-     return (
-       <Routes>
-         <Route path="users/:id" element={<User />}/>
-       </Routes>
-     );
-   }
+    <NavLink to={`detail/${m.id}/${m.title}/${m.content}`}>{m.title}</NavLink>
+
+    <Routes>
+      <Route path="detail/:id/:title/:content" element={<Detail />}/>
+    </Routes>
+
+    function ProfilePage() {
+      // 获取URL中携带过来的params参数
+      let { id,title,content } = useParams();
+    }
+  
    ```
 
 ### 4. useSearchParams()
@@ -318,28 +316,27 @@
 2. 返回一个包含两个值的数组，内容分别为：当前的seaech参数、更新search的函数。
 
 3. 示例代码：
-
    ```jsx
-   import React from 'react'
-   import {useSearchParams} from 'react-router-dom'
-   
-   export default function Detail() {
-   	const [search,setSearch] = useSearchParams()
-   	const id = search.get('id')
-   	const title = search.get('title')
-   	const content = search.get('content')
-   	return (
-   		<ul>
-   			<li>
-   				<button onClick={()=>setSearch('id=008&title=哈哈&content=嘻嘻')}>点我更新一下收到的search参数</button>
-   			</li>
-   			<li>消息编号：{id}</li>
-   			<li>消息标题：{title}</li>
-   			<li>消息内容：{content}</li>
-   		</ul>
-   	)
-   }
-   
+
+    <Link to={`detail?id=${m.id}&title=${m.title}&content=${m.content}`}>{m.title}</Link>
+
+    <Route path="detail" element={<Detail />}/>
+
+    const [search,setSearch] = useSearchParams()
+    const id = search.get('id')
+    const title = search.get('title')
+    const content = search.get('content')
+
+    ----
+    用setSearch来更新内容：
+    <ul>
+      <li>
+        <button onClick={()=>setSearch('id=008&title=哈哈&content=嘻嘻')}>点我更新一下收到的search参数</button>
+      </li>
+      <li>消息编号：{id}</li>
+      <li>消息标题：{title}</li>
+      <li>消息内容：{content}</li>
+    </ul>
    ```
 
 ### 5. useLocation()
@@ -349,35 +346,28 @@
 2. 示例代码：
 
    ```jsx
-   import React from 'react'
-   import {useLocation} from 'react-router-dom'
-   
-   export default function Detail() {
-   	const x = useLocation()
-   	console.log('@',x)
-     // x就是location对象: 
-   	/*
-   		{
-         hash: "",
-         key: "ah9nv6sz",
-         pathname: "/login",
-         search: "?name=zs&age=18",
-         state: {a: 1, b: 2}
-       }
-   	*/
-   	return (
-   		<ul>
-   			<li>消息编号：{id}</li>
-   			<li>消息标题：{title}</li>
-   			<li>消息内容：{content}</li>
-   		</ul>
-   	)
-   }
-   
-     
-   
-   
+    <NavLink to='detail' state={{ id: m.id, title: m.title, content: m.content }}>{m.title}</NavLink>
+
+    <Route path="detail" element={<Detail />}/>
+
+    export default function Detail() {
+      const location = useLocation()
+      console.log('location:', location)
+      const { state: { id, title, content } } = location
+
+      return (
+        <div>
+          <ul>
+            <li>消息编号：{id}</li>
+            <li>消息标题：{title}</li>
+            <li>消息内容：{content}</li>
+          </ul>
+        </div>
+      )
+    }
    ```
+![alt text](image.png)
+
 
 ### 6. useMatch()
 
@@ -390,16 +380,16 @@
    <NavLink to="/login/1/10">登录</NavLink>
    
    export default function Login() {
-     const match = useMatch('/login/:x/:y')
+     const match = useMatch('/login/:page/:pageSize')
      console.log(match) //输出match对象
      //match对象内容如下：
      /*
      	{
-         params: {x: '1', y: '10'}
+         params: {page: '1', pageSize: '10'}
          pathname: "/LoGin/1/10"  
          pathnameBase: "/LoGin/1/10"
          pattern: {
-         	path: '/login/:x/:y', 
+         	path: '/login/:page/:pageSize', 
          	caseSensitive: false, 
          	end: false
          }
@@ -411,7 +401,7 @@
        </div>
      )
    }
-   ```
+  ```
 
 ### 7. useInRouterContext()
 
@@ -439,4 +429,5 @@
 ### 10.useResolvedPath()
 
 1. 作用：给定一个 URL值，解析其中的：path、search、hash值。
-
+console.log('@@',useResolvedPath('/user?id=001&name=tom#qwe'))
+![alt text](image-1.png)
