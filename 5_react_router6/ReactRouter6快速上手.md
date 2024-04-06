@@ -371,37 +371,38 @@
 
 ### 6. useMatch()
 
-1. 作用：返回当前匹配信息，对标5.x中的路由组件的`match`属性。
+   1. 作用：返回当前匹配信息，对标5.x中的路由组件的`match`属性。
 
-2. 示例代码：
+   2. 示例代码：
 
-   ```jsx
-   <Route path="/login/:page/:pageSize" element={<Login />}/>
-   <NavLink to="/login/1/10">登录</NavLink>
-   
-   export default function Login() {
-     const match = useMatch('/login/:page/:pageSize')
-     console.log(match) //输出match对象
-     //match对象内容如下：
-     /*
-     	{
-         params: {page: '1', pageSize: '10'}
-         pathname: "/LoGin/1/10"  
-         pathnameBase: "/LoGin/1/10"
-         pattern: {
-         	path: '/login/:page/:pageSize', 
-         	caseSensitive: false, 
-         	end: false
-         }
-       }
-     */
-     return (
-     	<div>
-         <h1>Login</h1>
-       </div>
-     )
-   }
-  ```
+      ```jsx
+      <Route path="/login/:page/:pageSize" element={<Login />}/>
+      <NavLink to="/login/1/10">登录</NavLink>
+      
+      export default function Login() {
+        const match = useMatch('/login/:page/:pageSize')
+        console.log(match) //输出match对象
+        //match对象内容如下：
+        /*
+        	{
+            params: {page: '1', pageSize: '10'}
+            pathname: "/LoGin/1/10"  
+            pathnameBase: "/LoGin/1/10"
+            pattern: {
+            	path: '/login/:page/:pageSize', 
+            	caseSensitive: false, 
+            	end: false
+            }
+          }
+        */
+        return (
+        	<div>
+            <h1>Login</h1>
+          </div>
+        )
+      }
+      ```
+
 
 ### 7. useInRouterContext()
 
@@ -409,25 +410,26 @@
 
 ### 8. useNavigationType()
 
-1. 作用：返回当前的导航类型（用户是如何来到当前页面的）。
-2. 返回值：`POP`、`PUSH`、`REPLACE`。
-3. 备注：`POP`是指在浏览器中直接打开了这个路由组件（刷新页面）。
+    1. 作用：返回当前的导航类型（用户是如何来到当前页面的）。
+    2. 返回值：`POP`、`PUSH`、`REPLACE`。
+    3. 备注：`POP`是指在浏览器中直接打开了这个路由组件（刷新页面）。
 
 ### 9. useOutlet()
 
-1. 作用：用来呈现当前组件中渲染的嵌套路由。
+    1. 作用：用来呈现当前组件中渲染的嵌套路由。
 
-2. 示例代码：
+    2. 示例代码：
 
-   ```jsx
-   const result = useOutlet()
-   console.log(result)
-   // 如果嵌套路由没有挂载,则result为null
-   // 如果嵌套路由已经挂载,则展示嵌套的路由对象
-   ```
+  ```jsx
+  const result = useOutlet()
+  console.log(result)
+  // 如果嵌套路由没有挂载,则result为null
+  // 如果嵌套路由已经挂载,则展示嵌套的路由对象
+  ```
 
 ### 10.useResolvedPath()
 
-1. 作用：给定一个 URL值，解析其中的：path、search、hash值。
-console.log('@@',useResolvedPath('/user?id=001&name=tom#qwe'))
-![alt text](image-1.png)
+    1. 作用：给定一个 URL值，解析其中的：path、search、hash值。
+    console.log('@@',useResolvedPath('/user?id=001&name=tom#qwe'))
+
+  ![alt text](image-1.png)
